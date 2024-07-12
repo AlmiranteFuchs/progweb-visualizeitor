@@ -12,12 +12,12 @@ const http: any = require("http");
 const port: any = process.env.PORT || 3000;
 
 import { App } from "./app";
-// import { ApiServicesController } from './api_controllers/api_services_controller';
-// import { ApiSessions } from './api_models/api_model';
-// import { wwebjs_api } from './api_models/wwebjs/api_wweb';
+import { get_alunos_via_xml } from './controller/alunos_controller';
 
 new App().server.listen(port, () => { console.log(`Server is running at http://localhost:${port}`); });
-//#endregion APi Express Config
 
 // Test
-// const test_api:ApiSessions = new ApiSessions(new wwebjs_api("1"));
+get_alunos_via_xml("src/database/alunos.xml");
+
+// group by 
+

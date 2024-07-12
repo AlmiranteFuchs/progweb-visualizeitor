@@ -5,7 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colorful Items List</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <title>Grade BCC</title>
     <style>
         .item {
             padding: 10px;
@@ -19,7 +22,63 @@
 </head>
 
 <body>
-    
+    <table id="myTable" class="display">
+        <thead>
+            <tr>
+                <th>Matrícula</th>
+                <th>Nome</th>
+                <th>Código do Curso</th>
+                <th>Nome do Curso</th>
+                <th>Número da Versão</th>
+                <th>Ano</th>
+                <th>Período</th>
+                <th>Código da Atividade Curricular</th>
+                <th>Nome da Atividade Curricular</th>
+                <th>Créditos</th>
+                <th>Carga Horária Total</th>
+                <th>Conceito</th>
+                <th>Frequência</th>
+                <th>Média de Crédito</th>
+                <th>Situação do Currículo</th>
+                <th>Sigla</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
 </body>
 
 </html>
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable(
+            {
+                "paging": true,
+                "ordering": true,
+                "info": true,
+                "searching": true,
+                "ajax": "http://localhost:3000/grades",
+                // the format of columns is:
+                "columns": [
+                    { "data": "MATR_ALUNO" },
+                    { "data": "NOME_ALUNO" },
+                    { "data": "COD_CURSO" },
+                    { "data": "NOME_CURSO" },
+                    { "data": "NUM_VERSAO" },
+                    { "data": "ANO" },
+                    { "data": "PERIODO" },
+                    { "data": "COD_ATIV_CURRIC" },
+                    { "data": "NOME_ATIV_CURRIC" },
+                    { "data": "CREDITOS" },
+                    { "data": "CH_TOTAL" },
+                    { "data": "CONCEITO" },
+                    { "data": "FREQUENCIA" },
+                    { "data": "MEDIA_CREDITO" },
+                    { "data": "SITUACAO_CURRICULO" },
+                    { "data": "SIGLA" }
+                ]
+            }
+        );
+    });
+</script>

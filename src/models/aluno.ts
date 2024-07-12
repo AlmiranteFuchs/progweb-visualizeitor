@@ -1,16 +1,16 @@
 // Class that represents a student 
-interface AlunoInterface {
+export interface AlunoInterface {
     ID_CURSO_ALUNO: number;
     MATR_ALUNO: string;
     ID_VERSAO_CURSO: number;
     NOME_ALUNO: string;
     COD_CURSO: string;
     NOME_CURSO: string;
-    NUM_VERSAO: string;
-    ID_CURRIC_ALUNO: string;
-    ID_ATIV_CURRIC: string;
-    ANO: string;
-    MEDIA_FINAL: string;
+    NUM_VERSAO: Number;
+    ID_CURRIC_ALUNO: Number;
+    ID_ATIV_CURRIC: Number;
+    ANO: Number;
+    MEDIA_FINAL: Number;
     SITUACAO_ITEM: string;
     PERIODO: string;
     SITUACAO: string;
@@ -21,10 +21,10 @@ interface AlunoInterface {
     ID_LOCAL_DISPENSA: string;
     CONCEITO: string;
     ID_NOTA: number;
-    ID_ESTRUTURA_CUR: string;
+    ID_ESTRUTURA_CUR: Number;
     DESCR_ESTRUTURA: string;
-    FREQUENCIA: string;
-    MEDIA_CREDITO: string;
+    FREQUENCIA: Number;
+    MEDIA_CREDITO: Number;
     SITUACAO_CURRICULO: string;
     SIGLA: string;
 }
@@ -36,11 +36,11 @@ export class Aluno implements AlunoInterface {
     NOME_ALUNO: string;
     COD_CURSO: string;
     NOME_CURSO: string;
-    NUM_VERSAO: string;
-    ID_CURRIC_ALUNO: string;
-    ID_ATIV_CURRIC: string;
-    ANO: string;
-    MEDIA_FINAL: string;
+    NUM_VERSAO: Number;
+    ID_CURRIC_ALUNO: Number;
+    ID_ATIV_CURRIC: Number;
+    ANO: Number;
+    MEDIA_FINAL: Number;
     SITUACAO_ITEM: string;
     PERIODO: string;
     SITUACAO: string;
@@ -51,10 +51,10 @@ export class Aluno implements AlunoInterface {
     ID_LOCAL_DISPENSA: string;
     CONCEITO: string;
     ID_NOTA: number;
-    ID_ESTRUTURA_CUR: string;
+    ID_ESTRUTURA_CUR: Number;
     DESCR_ESTRUTURA: string;
-    FREQUENCIA: string;
-    MEDIA_CREDITO: string;
+    FREQUENCIA: Number;
+    MEDIA_CREDITO: Number;
     SITUACAO_CURRICULO: string;
     SIGLA: string;
 
