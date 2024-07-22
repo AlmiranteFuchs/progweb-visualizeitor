@@ -1,0 +1,53 @@
+<div class="modal-body">
+  <% data.forEach((ele) =>{
+    if(ele.grades != null){
+
+        ele = ele.grades[ele.grades.length - 1];
+    }else{
+        ele = {
+            COD_ATIV_CURRIC: "N/A",
+            NOME_ATIV_CURRIC: "N/A",
+            ANO: "N/A",
+            PERIODO: "N/A",
+            MEDIA_FINAL: "N/A",
+            FREQUENCIA: "N/A"
+        }
+    }
+        %>
+
+  <form>
+    <fieldset disabled>
+      <legend>Info Disciplinas</legend>
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">Código Disciplina</label>
+        <input type="text" class="form-control" placeholder="Disabled input" value=" <%= ele.COD_ATIV_CURRIC %>">
+      </div>
+
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">Nome Disciplina</label>
+        <input type="text" class="form-control" placeholder="Disabled input" value=" <%= ele.NOME_ATIV_CURRIC %>">
+      </div>
+
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">Última vez cursada</label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">- Ano</span>
+          <input type="text" class="form-control" placeholder="Disabled input" value=" <%= ele.ANO %>">
+          <span class="input-group-text">- Período</span>
+          <input type="text" class="form-control" placeholder="Disabled input" value=" <%= ele.PERIODO %>">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">Nota</label>
+        <input type="text" class="form-control" placeholder="Disabled input" value=" <%= ele.MEDIA_FINAL %>">
+        <div class="mb-3">
+          <label for="disabledTextInput" class="form-label">Frequência</label>
+          <input type="text" class="form-control" placeholder="Disabled input" value=" <%= ele.FREQUENCIA %>">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </fieldset>
+  </form>
+  <%})%>
+</div>

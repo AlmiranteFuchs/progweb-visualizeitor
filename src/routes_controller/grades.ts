@@ -3,84 +3,77 @@ import { Aluno } from "../models/aluno";
 import { get_alunos_via_xml } from "../controller/alunos_controller";
 import _ from 'lodash';
 
+
+
 class GradesConteroller {
+    // Constructor
+    constructor() {
+        // Cache the data
+        this.cached_data = [];
+    }
+
+    // Cache the data
+    public cached_data: [string, string, any][] = [];
 
     public GradesInfo(req: Request, res: Response) {
         // Get search parameters
         let grr_search: string = req.params.id;
 
+        let code: string = req.params.code;
+
         // Validate
-        if (grr_search == undefined) {
+        if (grr_search == undefined || code == undefined) {
             res.status(400).send("Invalid search parameters");
             return;
         }
 
         // Get all grades
-        var data: any[] = _get_all_grades(grr_search);
-
-        return res.json(data);
-
-    }
+        const data_new2 = parse_grades(grr_search, code);
 
 
-    public Grades(req: Request, res: Response) {
-        // Get search parameters
-        let grr_search: string = req.query.grr_search as string;
-
-        // Get all grades
-        var data: any[] = _get_all_grades(grr_search);
-
-        // This without mysql queries is really bad
-        // Using lodash we group by nome_aluno
-        var data_new = _.groupBy(data, 'NOME_ALUNO');
-
-
-        // Then inside the group we group by cod_ativ_curric
-        var data_new2 = _.map(data_new, (value, key) => {
-            return {
-                NOME_ALUNO: key,
-                COD_ATIV_CURRIC: _.groupBy(value, 'COD_ATIV_CURRIC')
-            }
-
-        });
-
-        // For each aluno
-        for (let i = 0; i < data_new2.length; i++) {
-            const element = data_new2[i];
-
-            // For each cod_ativ_curric 
-            for (let j = 0; j < Object.keys(element.COD_ATIV_CURRIC).length; j++) {
-                // Grab the row with the most recent year and period
-                let row = _.maxBy(element.COD_ATIV_CURRIC[Object.keys(element.COD_ATIV_CURRIC)[j]], (o) => { return o.ANO + parseInt(o.PERIODO.split("o.")[0]); });
-
-                // Remove all other rows
-                element.COD_ATIV_CURRIC[Object.keys(element.COD_ATIV_CURRIC)[j]] = [row];
-            }
-        }
-
-        // Reformat the data
-        let data_final = [];
-        for (let i = 0; i < data_new2.length; i++) {
-            const element = data_new2[i];
-            for (let j = 0; j < Object.keys(element.COD_ATIV_CURRIC).length; j++) {
-                data_final.push(element.COD_ATIV_CURRIC[Object.keys(element.COD_ATIV_CURRIC)[j]][0]);
-            }
-        }
-
-
-
-        res.json({
-            "draw": 1,
-            "recordsTotal": data.length,
-            "recordsFiltered": data_final.length,
-
-            // Data
-            "data": data_final
-        });
+        return res.render("grades_info", { data: data_new2 });
     }
 
 
 }
+
+export const grades_controller = new GradesConteroller();
+
+
+
+function parse_grades(grr_search: string, code: string) {
+    // Check if data is in cache
+    let data_cache = grades_controller.cached_data.find((value) => value[0] == grr_search && value[1] == code);
+    if (data_cache != undefined) {
+        return data_cache[2];
+    }
+
+
+    // Get all grades
+    var data: any[] = _get_all_grades(grr_search);
+
+    // This without mysql queries is really bad
+    // Using lodash we group by nome_aluno
+    var data_new = _.groupBy(data, 'NOME_ALUNO');
+
+
+    // Then inside the group we group by cod_ativ_curric, filter by code 
+    var data_new2 = _.map(data_new, (value, key) => {
+        return {
+            NOME_ALUNO: key,
+            grades: _.groupBy(value, 'COD_ATIV_CURRIC')[code]
+        }
+    });
+
+    // Get all grades
+    var data: any[] = _get_all_grades(grr_search);
+
+    // Cache the data
+    grades_controller.cached_data.push([grr_search, code, data_new2]);
+
+    return data_new2;
+}
+
 
 function _get_all_grades(grr_search: string): any[] {
     // Get all grades
@@ -122,4 +115,3 @@ function _get_all_grades(grr_search: string): any[] {
 
     return data;
 }
-export const grades_controller = new GradesConteroller();

@@ -3,83 +3,164 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-    <title>Grade BCC</title>
-    <style>
-        .item {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            font-family: Arial, sans-serif;
-            color: white;
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+  <!-- Import bootstrap npm -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+  <title>Grade BCC</title>
+
 </head>
 
 <body>
-    <table id="myTable" class="display">
-        <thead>
-            <tr>
-                <th>Matrícula</th>
-                <th>Nome</th>
-                <th>Código do Curso</th>
-                <th>Nome do Curso</th>
-                <th>Número da Versão</th>
-                <th>Ano</th>
-                <th>Período</th>
-                <th>Código da Atividade Curricular</th>
-                <th>Nome da Atividade Curricular</th>
-                <th>Créditos</th>
-                <th>Carga Horária Total</th>
-                <th>Conceito</th>
-                <th>Frequência</th>
-                <th>Média de Crédito</th>
-                <th>Situação do Currículo</th>
-                <th>Sigla</th>
-            </tr>
-        </thead>
-        <tbody>
+  <div class="container mt-3" style="width: 50%;">
+    <div id="grr_search" class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Username" aria-label="GRR" aria-describedby="basic-addon1">
+    </div>
+  </div>
 
-        </tbody>
-    </table>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="d-flex align-items-center m-5">
+          <strong>Loading...</strong>
+          <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="grid_search">
+    <div class="container">
+      <div class="row" style="background-color: gray;">
+        <div class="col text-center">1</div>
+        <div class="col text-center">2</div>
+        <div class="col text-center">3</div>
+        <div class="col text-center">4</div>
+        <div class="col text-center">5</div>
+        <div class="col text-center">6</div>
+        <div class="col text-center">7</div>
+        <div class="col text-center">8</div>
+      </div>
+      <div id="grid_content">
+
+      </div>
+    </div>
+  </div>
+
+
+
+
 </body>
+
+<style>
+  .disci {
+    color: #2876c9;
+    cursor: pointer;
+    border-style: solid;
+    border-color: gray;
+  }
+</style>
+
 
 </html>
 <script>
-    $(document).ready(function () {
-        $('#myTable').DataTable(
-            {
-                "paging": true,
-                "ordering": true,
-                "info": true,
-                "searching": true,
-                "ajax": "http://localhost:3000/grades",
-                // the format of columns is:
-                "columns": [
-                    { "data": "MATR_ALUNO" },
-                    { "data": "NOME_ALUNO" },
-                    { "data": "COD_CURSO" },
-                    { "data": "NOME_CURSO" },
-                    { "data": "NUM_VERSAO" },
-                    { "data": "ANO" },
-                    { "data": "PERIODO" },
-                    { "data": "COD_ATIV_CURRIC" },
-                    { "data": "NOME_ATIV_CURRIC" },
-                    { "data": "CREDITOS" },
-                    { "data": "CH_TOTAL" },
-                    { "data": "CONCEITO" },
-                    { "data": "FREQUENCIA" },
-                    { "data": "MEDIA_CREDITO" },
-                    { "data": "SITUACAO_CURRICULO" },
-                    { "data": "SIGLA" }
-                ]
-            }
-        );
+  var searched_grr = "GRR00000000";
+  const disci_names = [
+    "CI068", "CI210", "CI212", "CI215", "CI162", "CI163", "CI221",
+    "OPT", "CI055", "CI056", "CI057", "CI062", "CI065", "CI165",
+    "CI211", "OPT", "CM046", "CI067", "CI064", "CE003", "CI059",
+    "CI209", "OPT", "OPT", "CM045", "CM005", "CI237", "CI058",
+    "CI061", "CI218", "OPT", "OPT", "CM201", "CM202", "CI166",
+    "CI164", "SA214", "CI220", "TG I", "TG II"
+  ];
+
+  function search_info(grr, code, url) {
+    return $.ajax({
+      url: 'http://localhost:3000/' + url + '/' + searched_grr + "/" + code,
+      type: 'GET',
+      success: function(data) {
+        return data;
+      },
+      error: function(request, error) {
+        return alert("Failed to request data for grr" + searched_grr)
+      }
     });
+
+  }
+
+
+  $(document).ready(function() {
+    load_grid();
+
+
+    $(".disci").click((element) => {
+      const el_id = element.currentTarget.dataset.id;
+      const code = element.currentTarget.innerHTML;
+
+      reload_modal(el_id, code);
+    });
+
+    $("#grr_search").change((el) => {
+      searched_grr = (el.target.value);
+    });
+
+    $("#exampleModal").on('hidden.bs.modal', function(event) {
+      // Put a spinner on the modal
+      const modal = $("#exampleModal").find(".modal-content");
+      modal.html('<div class="d-flex align-items-center m-5"><strong>Loading...</strong><div class="spinner-border ms-auto" role="status" aria-hidden="true"></div></div>');
+    });
+
+  });
+
+  function load_grid() {
+    const grid = $("#grid_content");
+    grid.html("");
+    let row = "<div class='row'>";
+    disci_names.forEach((name, index) => {
+      // Make a request to the server to check the status of the discipline
+    //   const info = (search_info(searched_grr, name));
+    //   let bg_color = "white";
+
+    //   console.log(searched_grr, name);
+
+    //   if (info != null) {
+    //     if (info.grades != null) {
+    //       const last_grade = info.grades[info.grades.length - 1];
+    //       console.log(last_grade.SIGLA);
+    //       switch (last_grade.SIGLA) {
+    //         case value:
+
+    //           break;
+
+    //         default:
+    //           break;
+    //       }
+    //     }
+    //   }
+
+
+
+      row += "<div class='col text-center disci' data-id='" + index + "' data-bs-toggle='modal' data-bs-target='#exampleModal'>" + name + "</div>";
+      if ((index + 1) % 8 == 0) {
+        row += "</div>";
+        grid.append(row);
+        row = "<div class='row'>";
+      }
+    });
+  }
+
+
+
+  async function reload_modal(grr, code) {
+    const modal = $("#exampleModal").find(".modal-content");
+    let data = await search_info(grr, code, "grades_info");
+    modal.html(data);
+  }
 </script>
