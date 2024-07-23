@@ -106,6 +106,7 @@
 
     $("#grr_search").change((el) => {
       searched_grr = (el.target.value);
+      load_grid();
     });
 
     $("#exampleModal").on('hidden.bs.modal', function (event) {
@@ -150,21 +151,36 @@
       if (data[0].grades == null) {
       } else {
         let nota = data[0].grades[data[0].grades.length - 1].SITUACAO;
+
+        console.log(nota);
         switch (nota) {
           case "Aprovado":
-            el2.css("background-color", "#28a745");
+            el2.css("background-color", "#47ff51");
             break;
 
           case "Reprovado por nota":
-            el2.css("background-color", "#dc3545");
+          case "Reprovado por faltas":
+          case "Reprovado por Frequência":
+          case "Trancamento Total":
+            el2.css("background-color", "#ff668c");
             break;
 
+          case "Matrícula":
+            el2.css("background-color", "#5c9bf2");
+            break;
+
+          case "Dispensa de Disciplinas (com nota)":
+            // Yellow
+            el2.css("background-color", "#ffc107");
+            break;
+
+            break;
           default:
             break;
         }
       }
 
-      
+
 
       if (i % 8 == 7) {
         grid.append(el);
