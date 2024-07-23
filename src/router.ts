@@ -12,5 +12,7 @@ const router: Router = Router();
 router.get('/', home_controller.Home);
 
 router.get('/grades_info/:id/:code', grades_controller.GradesInfo);
+router.get('/grades_data/:id/:code', grades_controller.GradesData);
+
 
 export { router };

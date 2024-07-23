@@ -34,7 +34,23 @@ class GradesConteroller {
         return res.render("grades_info", { data: data_new2 });
     }
 
+    public GradesData(req: Request, res: Response) {
+        // Get search parameters
+        let grr_search: string = req.params.id;
 
+        let code: string = req.params.code;
+
+        // Validate
+        if (grr_search == undefined || code == undefined) {
+            res.status(400).send("Invalid search parameters");
+            return;
+        }
+
+        // Get all gradesF
+        const data_new2 = parse_grades(grr_search, code);
+
+        return res.json(data_new2);
+    }
 }
 
 export const grades_controller = new GradesConteroller();
