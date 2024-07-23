@@ -24,12 +24,13 @@
 </head>
 
 <body>
-  <div class="container mt-3" style="width: 50%;">
+  <div class="container mt-3" style="width: 100%;">
     <div id="grr_search" class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1">GRR</span>
       </div>
-      <input type="text" maxlength="8" class="form-control" placeholder="Username" aria-label="GRR" aria-describedby="basic-addon1">
+      <input type="text" maxlength="8" class="form-control" placeholder="00000000" aria-label="GRR"
+        aria-describedby="basic-addon1">
     </div>
   </div>
 
@@ -64,7 +65,12 @@
 
 
 
-
+  <small>
+    <footer class="mt-5 text-center">
+      A grade feita a partir da grade de 2011, se for necessário adicionar mais disciplinas, basta adicionar no array
+      "disci_names", o código da disciplina.
+    </footer>
+  </small>
 </body>
 
 <style>
@@ -108,7 +114,7 @@
     load_grid();
 
     $("#grr_search").change((el) => {
-      searched_grr = "GRR"+(el.target.value);
+      searched_grr = "GRR" + (el.target.value);
       load_grid();
     });
 

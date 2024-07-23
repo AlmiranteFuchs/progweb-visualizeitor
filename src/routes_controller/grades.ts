@@ -28,7 +28,7 @@ class GradesConteroller {
 
         
 
-        return res.render("grades_info", { data: parse_grades(grr_search, code) });
+        return res.render("grades_info", { data: parse_grades(grr_search, code), code: code });
     }
 
     // Looks for the data on grr, returns all codes
