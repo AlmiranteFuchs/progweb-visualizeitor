@@ -26,7 +26,10 @@
 <body>
   <div class="container mt-3" style="width: 50%;">
     <div id="grr_search" class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Username" aria-label="GRR" aria-describedby="basic-addon1">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">GRR</span>
+      </div>
+      <input type="text" maxlength="8" class="form-control" placeholder="Username" aria-label="GRR" aria-describedby="basic-addon1">
     </div>
   </div>
 
@@ -105,7 +108,7 @@
     load_grid();
 
     $("#grr_search").change((el) => {
-      searched_grr = (el.target.value);
+      searched_grr = "GRR"+(el.target.value);
       load_grid();
     });
 
@@ -124,6 +127,8 @@
   }
 
   async function load_grid() {
+    let data = await search_info(searched_grr, null, "grades_data");
+    console.log(data);
     const grid = $("#grid_content");
     grid.html("");
 
@@ -146,22 +151,22 @@
 
       // Check color consulting the info      // data-bs-toggle='modal' data-bs-target='#exampleModal'
 
-      let data = await search_info(searched_grr, disci_names[i], "grades_data");
+      // Nota is a object with disci codes as keys
+      if (data[disci_names[i]]) {
+        var nota = data[disci_names[i]];
+        nota = nota[nota.length - 1].SITUACAO;
 
-      if (data[0].grades == null) {
-      } else {
-        let nota = data[0].grades[data[0].grades.length - 1].SITUACAO;
-
-        console.log(nota);
         switch (nota) {
           case "Aprovado":
             el2.css("background-color", "#47ff51");
             break;
 
+          case "Trancamento Total":
+            // Add <i class="fa fa-lock" aria-hidden="true"></i>
+            el2.html(el2.html() + " <i class='fa fa-lock' aria-hidden='true'></i>");
           case "Reprovado por nota":
           case "Reprovado por faltas":
           case "Reprovado por Frequência":
-          case "Trancamento Total":
             el2.css("background-color", "#ff668c");
             break;
 
@@ -178,9 +183,8 @@
           default:
             break;
         }
+
       }
-
-
 
       if (i % 8 == 7) {
         grid.append(el);
@@ -190,8 +194,6 @@
     }
 
   }
-
-
 
   async function reload_modal(grr, code) {
     const modal = $("#exampleModal").find(".modal-content");

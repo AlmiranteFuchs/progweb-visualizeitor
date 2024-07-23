@@ -1,8 +1,12 @@
 <div class="modal-body">
-  <% data.forEach((ele) =>{
-    if(ele.grades != null){
+  <%
+    let ele;
+    if(data != null){
+      // ele is the first key of the object
+      ele = data[Object.keys(data)[0]];
+      ele = ele[ele.length - 1];  // Get the last element
 
-        ele = ele.grades[ele.grades.length - 1];
+        
     }else{
         ele = {
             COD_ATIV_CURRIC: "N/A",
@@ -49,5 +53,5 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </fieldset>
   </form>
-  <%})%>
+  %>
 </div>
