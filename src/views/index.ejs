@@ -95,7 +95,7 @@
     "CI164", "SA214", "CI220", "TG I", "TG II"
   ];
 
-  function search_info(grr, code, url) {
+  function search_info(code, url) {
     return $.ajax({
       url: 'http://localhost:3000/' + url + '/' + searched_grr + "/" + code,
       type: 'GET',
@@ -128,12 +128,11 @@
 
   function on_click_disci(element) {
     const el_id = element.currentTarget.dataset.id;
-    const code = element.currentTarget.innerHTML;
-    reload_modal(el_id, code);
+    reload_modal(el_id);
   }
 
   async function load_grid() {
-    let data = await search_info(searched_grr, null, "grades_data");
+    let data = await search_info(null, "grades_data");
     console.log(data);
     const grid = $("#grid_content");
     grid.html("");
@@ -201,9 +200,9 @@
 
   }
 
-  async function reload_modal(grr, code) {
+  async function reload_modal(code) {
     const modal = $("#exampleModal").find(".modal-content");
-    let data = await search_info(grr, code, "grades_info");
+    let data = await search_info(code, "grades_info");
     modal.html(data);
   }
 </script>
